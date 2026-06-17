@@ -101,7 +101,9 @@ app.post('/send-contract', async (req, res) => {
   }
 });
 
-app.get('/', (req, res) => res.json({ status: 'Hermun Enterprises Contract API running ✅' }));
+const path = require('path');
+app.use(express.static(path.join(__dirname, 'public')));
+app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'public', 'index.html')));
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, '0.0.0.0', () => console.log(`Server running on port ${PORT}`));

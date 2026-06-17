@@ -5,235 +5,365 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Hermun Enterprises — Roofing Contract</title>
 <style>
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f5; color: #111; min-height: 100vh; }
-.container { max-width: 680px; margin: 0 auto; padding: 2rem 1rem; }
-.logo { font-size: 18px; font-weight: 600; margin-bottom: 1.5rem; color: #111; }
-.logo span { color: #666; font-weight: 400; }
-.steps { display: flex; align-items: center; margin-bottom: 1.5rem; }
-.step { display: flex; align-items: center; gap: 6px; font-size: 12px; }
-.step-dot { width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; flex-shrink: 0; }
-.step-dot.active { background: #111; color: #fff; }
-.step-dot.done { background: #d1fae5; color: #065f46; }
-.step-dot.inactive { background: #e5e5e5; color: #999; }
-.step-label { color: #999; font-size: 12px; }
-.step-label.active { color: #111; font-weight: 500; }
-.step-line { flex: 1; height: 1px; background: #e5e5e5; margin: 0 8px; }
-.screen { display: none; }
-.screen.active { display: block; }
-.card { background: #fff; border: 1px solid #e5e5e5; border-radius: 12px; padding: 1.25rem; margin-bottom: 1rem; }
-.card-title { font-size: 11px; font-weight: 600; color: #999; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 1rem; }
-.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
-.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 10px; }
-.field { display: flex; flex-direction: column; gap: 4px; }
-.field label { font-size: 11px; color: #666; font-weight: 500; }
-.field input, .field select { font-family: inherit; font-size: 13px; padding: 8px 10px; border: 1px solid #e0e0e0; border-radius: 8px; outline: none; width: 100%; background: #fff; }
-.field input:focus, .field select:focus { border-color: #111; }
-.field input[readonly] { background: #f9f9f9; color: #666; }
-.divider { height: 1px; background: #e5e5e5; margin: 14px 0; }
-.toggle-row { display: flex; align-items: center; gap: 10px; }
-.toggle-row > label:first-child { font-size: 12px; color: #666; font-weight: 500; }
-.toggle { position: relative; display: inline-block; width: 36px; height: 20px; }
-.toggle input { opacity: 0; width: 0; height: 0; }
-.slider { position: absolute; inset: 0; background: #ccc; border-radius: 20px; cursor: pointer; transition: 0.2s; }
-.slider:before { content:''; position:absolute; width:14px; height:14px; left:3px; top:3px; background:white; border-radius:50%; transition:0.2s; }
-input:checked + .slider { background: #111; }
-input:checked + .slider:before { transform: translateX(16px); }
-.cosigner-block { display: none; margin-top: 12px; }
-.cosigner-block.visible { display: block; }
-.fin-block { display: none; }
-.btn-primary { width: 100%; padding: 13px; font-size: 14px; font-weight: 600; font-family: inherit; border-radius: 10px; cursor: pointer; border: none; background: #111; color: #fff; display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 0.5rem; }
-.btn-primary:hover { background: #333; }
-.btn-primary:disabled { opacity: 0.4; cursor: not-allowed; }
-.btn-secondary { width: 100%; padding: 12px; font-size: 14px; font-weight: 500; font-family: inherit; border-radius: 10px; cursor: pointer; background: transparent; color: #111; border: 1px solid #e0e0e0; display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 10px; }
-.btn-secondary:hover { background: #f5f5f5; }
-.alert { margin-top: 12px; padding: 12px 16px; border-radius: 8px; font-size: 13px; display: none; }
-.alert.error { display: block; background: #fef2f2; color: #991b1b; border: 1px solid #fecaca; }
-.alert.loading { display: block; background: #f5f5f5; color: #555; border: 1px solid #e5e5e5; }
-.review-row { display: flex; justify-content: space-between; padding: 7px 0; border-bottom: 1px solid #f0f0f0; font-size: 13px; }
-.review-row:last-child { border-bottom: none; }
-.review-label { color: #999; }
-.review-value { font-weight: 500; text-align: right; }
-.review-value.empty { color: #ccc; font-style: italic; font-weight: 400; }
-.success-icon { width: 56px; height: 56px; border-radius: 50%; background: #d1fae5; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; font-size: 28px; }
-h2 { font-size: 20px; font-weight: 600; margin-bottom: 4px; }
-p.sub { font-size: 13px; color: #666; margin-bottom: 1.25rem; }
-@media (max-width: 500px) { .grid-2, .grid-3 { grid-template-columns: 1fr; } }
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f5f5f5;color:#111;min-height:100vh;}
+.wrap{max-width:680px;margin:0 auto;padding:2rem 1rem;}
+.logo{font-size:18px;font-weight:600;margin-bottom:1.5rem;}
+.logo span{color:#666;font-weight:400;}
+.screen{display:none;}.screen.active{display:block;}
+.card{background:#fff;border:1px solid #e5e5e5;border-radius:12px;padding:1.25rem;margin-bottom:1rem;}
+.card-title{font-size:11px;font-weight:600;color:#999;text-transform:uppercase;letter-spacing:.06em;margin-bottom:1rem;}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:10px;}
+.f{display:flex;flex-direction:column;gap:4px;}
+.f label{font-size:11px;color:#666;font-weight:500;}
+.f input,.f select{font-family:inherit;font-size:13px;padding:8px 10px;border:1px solid #e0e0e0;border-radius:8px;outline:none;width:100%;background:#fff;}
+.f input:focus,.f select:focus{border-color:#111;}
+.f input[readonly]{background:#f9f9f9;color:#666;}
+.divider{height:1px;background:#e5e5e5;margin:14px 0;}
+.tog-row{display:flex;align-items:center;gap:10px;}
+.tog-row>label:first-child{font-size:12px;color:#666;font-weight:500;}
+.tog{position:relative;display:inline-block;width:36px;height:20px;}
+.tog input{opacity:0;width:0;height:0;}
+.sl{position:absolute;inset:0;background:#ccc;border-radius:20px;cursor:pointer;transition:.2s;}
+.sl:before{content:'';position:absolute;width:14px;height:14px;left:3px;top:3px;background:white;border-radius:50%;transition:.2s;}
+input:checked+.sl{background:#111;}
+input:checked+.sl:before{transform:translateX(16px);}
+.co-block{display:none;margin-top:12px;}
+.co-block.show{display:block;}
+.fin-block{display:none;}
+.btn{width:100%;padding:13px;font-size:14px;font-weight:600;font-family:inherit;border-radius:10px;cursor:pointer;border:none;background:#111;color:#fff;display:flex;align-items:center;justify-content:center;gap:8px;margin-top:.5rem;}
+.btn:hover{background:#333;}
+.btn:disabled{opacity:.4;cursor:not-allowed;}
+.btn2{width:100%;padding:12px;font-size:14px;font-weight:500;font-family:inherit;border-radius:10px;cursor:pointer;background:transparent;color:#111;border:1px solid #e0e0e0;display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:10px;}
+.btn2:hover{background:#f5f5f5;}
+.alert{margin-top:12px;padding:12px 16px;border-radius:8px;font-size:13px;display:none;}
+.alert.err{display:block;background:#fef2f2;color:#991b1b;border:1px solid #fecaca;}
+.alert.load{display:block;background:#f5f5f5;color:#555;border:1px solid #e5e5e5;}
+.rrow{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid #f0f0f0;font-size:13px;}
+.rrow:last-child{border-bottom:none;}
+.rlabel{color:#999;}
+.rval{font-weight:500;text-align:right;}
+.rval.empty{color:#ccc;font-style:italic;font-weight:400;}
+.ok-icon{width:56px;height:56px;border-radius:50%;background:#d1fae5;display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;font-size:28px;}
+h2{font-size:20px;font-weight:600;margin-bottom:4px;}
+.sub{font-size:13px;color:#666;margin-bottom:1.25rem;}
+.steps{display:flex;align-items:center;margin-bottom:1.5rem;}
+.step{display:flex;align-items:center;gap:6px;font-size:12px;}
+.sdot{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;flex-shrink:0;}
+.sdot.on{background:#111;color:#fff;}
+.sdot.dn{background:#d1fae5;color:#065f46;}
+.sdot.off{background:#e5e5e5;color:#999;}
+.sline{flex:1;height:1px;background:#e5e5e5;margin:0 8px;}
+.slabel{color:#999;font-size:12px;}
+.slabel.on{color:#111;font-weight:500;}
+@media(max-width:500px){.g2,.g3{grid-template-columns:1fr;}}
 </style>
 </head>
 <body>
-<div class="container">
+<div class="wrap">
   <div class="logo">Hermun Enterprises <span>/ Roofing Contract</span></div>
 
-  <div id="screen-form" class="screen active">
+  <!-- STEP 1: FORM -->
+  <div id="s1" class="screen active">
     <div class="steps">
-      <div class="step"><div class="step-dot active">1</div><span class="step-label active">Details</span></div>
-      <div class="step-line"></div>
-      <div class="step"><div class="step-dot inactive">2</div><span class="step-label">Review</span></div>
-      <div class="step-line"></div>
-      <div class="step"><div class="step-dot inactive">3</div><span class="step-label">Send</span></div>
+      <div class="step"><div class="sdot on">1</div><span class="slabel on">Details</span></div>
+      <div class="sline"></div>
+      <div class="step"><div class="sdot off">2</div><span class="slabel">Review</span></div>
+      <div class="sline"></div>
+      <div class="step"><div class="sdot off">3</div><span class="slabel">Send</span></div>
     </div>
     <h2>New roofing contract</h2>
     <p class="sub">Fill in all sections, then review before sending.</p>
 
     <div class="card">
       <div class="card-title">Customer info</div>
-      <div class="grid-2"><div class="field"><label>Name</label><input type="text" id="f-name" placeholder="Full name"/></div><div class="field"><label>Email</label><input type="email" id="f-email" placeholder="customer@email.com"/></div></div>
-      <div style="margin-bottom:10px"><div class="field"><label>Address</label><input type="text" id="f-address" placeholder="Street address"/></div></div>
-      <div class="grid-3">
-        <div class="field"><label>City</label><input type="text" id="f-city" placeholder="City"/></div>
-        <div class="field"><label>State</label><select id="f-state"><option value="">State...</option><option>AL</option><option>AK</option><option>AZ</option><option>AR</option><option>CA</option><option>CO</option><option>CT</option><option>DE</option><option>FL</option><option>GA</option><option>HI</option><option>ID</option><option>IL</option><option>IN</option><option>IA</option><option>KS</option><option>KY</option><option>LA</option><option>ME</option><option>MD</option><option>MA</option><option>MI</option><option>MN</option><option>MS</option><option>MO</option><option>MT</option><option>NE</option><option>NV</option><option>NH</option><option>NJ</option><option>NM</option><option>NY</option><option>NC</option><option>ND</option><option>OH</option><option>OK</option><option>OR</option><option>PA</option><option>RI</option><option>SC</option><option>SD</option><option>TN</option><option>TX</option><option>UT</option><option>VT</option><option>VA</option><option>WA</option><option>WV</option><option>WI</option><option>WY</option></select></div>
-        <div class="field"><label>Zip code</label><input type="text" id="f-zip" placeholder="00000" maxlength="10"/></div>
+      <div class="g2">
+        <div class="f"><label>Name</label><input id="i-name" type="text" placeholder="Full name"></div>
+        <div class="f"><label>Email</label><input id="i-email" type="email" placeholder="customer@email.com"></div>
       </div>
-      <div class="grid-2" style="margin-bottom:14px">
-        <div class="field"><label>Phone number</label><input type="tel" id="f-phone" placeholder="(555) 000-0000"/></div>
-        <div class="field"><label>Price</label><input type="number" id="f-price" placeholder="0.00" min="0" step="0.01" oninput="calcFinal()"/></div>
+      <div style="margin-bottom:10px"><div class="f"><label>Address</label><input id="i-addr" type="text" placeholder="Street address"></div></div>
+      <div class="g3">
+        <div class="f"><label>City</label><input id="i-city" type="text" placeholder="City"></div>
+        <div class="f"><label>State</label>
+          <select id="i-state"><option value="">State...</option><option>AL</option><option>AK</option><option>AZ</option><option>AR</option><option>CA</option><option>CO</option><option>CT</option><option>DE</option><option>FL</option><option>GA</option><option>HI</option><option>ID</option><option>IL</option><option>IN</option><option>IA</option><option>KS</option><option>KY</option><option>LA</option><option>ME</option><option>MD</option><option>MA</option><option>MI</option><option>MN</option><option>MS</option><option>MO</option><option>MT</option><option>NE</option><option>NV</option><option>NH</option><option>NJ</option><option>NM</option><option>NY</option><option>NC</option><option>ND</option><option>OH</option><option>OK</option><option>OR</option><option>PA</option><option>RI</option><option>SC</option><option>SD</option><option>TN</option><option>TX</option><option>UT</option><option>VT</option><option>VA</option><option>WA</option><option>WV</option><option>WI</option><option>WY</option></select>
+        </div>
+        <div class="f"><label>Zip code</label><input id="i-zip" type="text" placeholder="00000" maxlength="10"></div>
+      </div>
+      <div class="g2" style="margin-bottom:14px">
+        <div class="f"><label>Phone number</label><input id="i-phone" type="tel" placeholder="(555) 000-0000"></div>
+        <div class="f"><label>Price ($)</label><input id="i-price" type="number" placeholder="0.00" min="0" step="0.01"></div>
       </div>
       <div class="divider"></div>
-      <div class="toggle-row">
+      <div class="tog-row">
         <label>Co-signer?</label>
-        <label class="toggle"><input type="checkbox" id="f-cosigner-toggle" onchange="toggleCosigner()"/><span class="slider"></span></label>
+        <label class="tog"><input id="i-co-toggle" type="checkbox"><span class="sl"></span></label>
         <span style="font-size:12px;color:#999">Toggle on if customer has a co-signer</span>
       </div>
-      <div class="cosigner-block" id="cosigner-block">
-        <div class="grid-3" style="margin-top:12px;margin-bottom:0">
-          <div class="field"><label>Cosigner name</label><input type="text" id="f-co-name" placeholder="Full name"/></div>
-          <div class="field"><label>Cosigner phone</label><input type="tel" id="f-co-phone" placeholder="(555) 000-0000"/></div>
-          <div class="field"><label>Cosigner email</label><input type="email" id="f-co-email" placeholder="cosigner@email.com"/></div>
+      <div class="co-block" id="co-block">
+        <div class="g3" style="margin-top:12px;margin-bottom:0">
+          <div class="f"><label>Cosigner name</label><input id="i-co-name" type="text" placeholder="Full name"></div>
+          <div class="f"><label>Cosigner phone</label><input id="i-co-phone" type="tel" placeholder="(555) 000-0000"></div>
+          <div class="f"><label>Cosigner email</label><input id="i-co-email" type="email" placeholder="cosigner@email.com"></div>
         </div>
       </div>
     </div>
 
     <div class="card">
       <div class="card-title">Payment & financing</div>
-      <div class="grid-2">
-        <div class="field"><label>Financed or cash</label><select id="f-fin" onchange="toggleFinancing()"><option value="">Select...</option><option value="Cash">Cash</option><option value="Financed">Financed</option></select></div>
-        <div class="field"><label>Down payment</label><input type="number" id="f-down" placeholder="0.00" min="0" step="0.01" oninput="calcFinal()"/></div>
+      <div class="g2">
+        <div class="f"><label>Financed or cash</label>
+          <select id="i-fin"><option value="">Select...</option><option value="Cash">Cash</option><option value="Financed">Financed</option></select>
+        </div>
+        <div class="f"><label>Down payment ($)</label><input id="i-down" type="number" placeholder="0.00" min="0" step="0.01"></div>
       </div>
       <div class="fin-block" id="fin-block">
-        <div class="grid-2">
-          <div class="field"><label>Bank</label><input type="text" id="f-bank" placeholder="Lender name"/></div>
-          <div class="field"><label>Monthly payment</label><input type="number" id="f-monthly" placeholder="0.00" min="0" step="0.01"/></div>
+        <div class="g2">
+          <div class="f"><label>Bank</label><input id="i-bank" type="text" placeholder="Lender name"></div>
+          <div class="f"><label>Monthly payment ($)</label><input id="i-monthly" type="number" placeholder="0.00" min="0" step="0.01"></div>
         </div>
-        <div class="grid-3" style="margin-bottom:0">
-          <div class="field"><label>Term</label><input type="text" id="f-term" placeholder="e.g. 60 months"/></div>
-          <div class="field"><label>APR (%)</label><input type="number" id="f-apr" placeholder="0.00" min="0" step="0.01"/></div>
-          <div class="field"><label>Final payment</label><input type="text" id="f-final" readonly placeholder="Auto-calculated"/></div>
+        <div class="g3" style="margin-bottom:0">
+          <div class="f"><label>Term</label><input id="i-term" type="text" placeholder="e.g. 60 months"></div>
+          <div class="f"><label>APR (%)</label><input id="i-apr" type="number" placeholder="0.00" min="0" step="0.01"></div>
+          <div class="f"><label>Final payment</label><input id="i-final" type="text" readonly placeholder="Auto-calculated"></div>
         </div>
       </div>
     </div>
 
     <div class="card">
       <div class="card-title">Sales rep</div>
-      <div class="grid-2" style="margin-bottom:0">
-        <div class="field"><label>Rep name</label><input type="text" id="f-rep" placeholder="Full name"/></div>
-        <div class="field"><label>Rep email</label><input type="email" id="f-rep-email" placeholder="rep@hermunenterprises.com"/></div>
+      <div class="g2" style="margin-bottom:0">
+        <div class="f"><label>Rep name</label><input id="i-rep" type="text" placeholder="Full name"></div>
+        <div class="f"><label>Rep email</label><input id="i-rep-email" type="email" placeholder="rep@hermunenterprises.com"></div>
       </div>
     </div>
 
     <div class="card">
       <div class="card-title">Roofing specs</div>
-      <div class="grid-2">
-        <div class="field"><label>Roofing brand</label><input type="text" id="f-brand" placeholder="e.g. Malarkey, Owens Corning"/></div>
-        <div class="field"><label>Roofing color</label><input type="text" id="f-color" placeholder="e.g. Charcoal"/></div>
+      <div class="g2">
+        <div class="f"><label>Roofing brand</label><input id="i-brand" type="text" placeholder="e.g. Malarkey, Owens Corning"></div>
+        <div class="f"><label>Roofing color</label><input id="i-color" type="text" placeholder="e.g. Charcoal"></div>
       </div>
-      <div class="grid-2">
-        <div class="field"><label>Roofing (SQ)</label><input type="number" id="f-sq" placeholder="0" min="0" step="0.1"/></div>
-        <div class="field"><label>OSB</label><input type="number" id="f-osb" placeholder="0" min="0"/></div>
+      <div class="g2">
+        <div class="f"><label>Roofing (SQ)</label><input id="i-sq" type="number" placeholder="0" min="0" step="0.1"></div>
+        <div class="f"><label>OSB</label><input id="i-osb" type="number" placeholder="0" min="0"></div>
       </div>
-      <div class="grid-3" style="margin-bottom:0">
-        <div class="field"><label>Fascia linear ft</label><input type="number" id="f-fascia" placeholder="0" min="0"/></div>
-        <div class="field"><label>Soffit linear ft</label><input type="number" id="f-soffit" placeholder="0" min="0"/></div>
-        <div class="field"><label>Siding linear ft</label><input type="number" id="f-siding" placeholder="0" min="0"/></div>
+      <div class="g3" style="margin-bottom:0">
+        <div class="f"><label>Fascia linear ft</label><input id="i-fascia" type="number" placeholder="0" min="0"></div>
+        <div class="f"><label>Soffit linear ft</label><input id="i-soffit" type="number" placeholder="0" min="0"></div>
+        <div class="f"><label>Siding linear ft</label><input id="i-siding" type="number" placeholder="0" min="0"></div>
       </div>
     </div>
 
-    <button class="btn-primary" onclick="goToReview()">Review contract &rarr;</button>
-    <div class="alert" id="form-error"></div>
+    <button class="btn" onclick="goReview()">Review contract &rarr;</button>
+    <div class="alert" id="err1"></div>
   </div>
 
-  <div id="screen-review" class="screen">
+  <!-- STEP 2: REVIEW -->
+  <div id="s2" class="screen">
     <div class="steps">
-      <div class="step"><div class="step-dot done">&#10003;</div><span class="step-label">Details</span></div>
-      <div class="step-line"></div>
-      <div class="step"><div class="step-dot active">2</div><span class="step-label active">Review</span></div>
-      <div class="step-line"></div>
-      <div class="step"><div class="step-dot inactive">3</div><span class="step-label">Send</span></div>
+      <div class="step"><div class="sdot dn">&#10003;</div><span class="slabel">Details</span></div>
+      <div class="sline"></div>
+      <div class="step"><div class="sdot on">2</div><span class="slabel on">Review</span></div>
+      <div class="sline"></div>
+      <div class="step"><div class="sdot off">3</div><span class="slabel">Send</span></div>
     </div>
     <h2>Review contract</h2>
     <p class="sub">Double-check everything before sending for signature.</p>
-    <div class="card"><div class="card-title">Customer info</div><div id="rv-customer"></div></div>
-    <div class="card"><div class="card-title">Payment & financing</div><div id="rv-payment"></div></div>
-    <div class="card"><div class="card-title">Sales rep</div><div id="rv-rep"></div></div>
-    <div class="card"><div class="card-title">Roofing specs</div><div id="rv-roofing"></div></div>
-    <button class="btn-secondary" onclick="goBack()">&larr; Edit details</button>
-    <button class="btn-primary" id="confirm-btn" onclick="sendContract()">Confirm &amp; send via SignWell</button>
-    <div class="alert" id="send-status"></div>
+    <div class="card"><div class="card-title">Customer info</div><div id="rv1"></div></div>
+    <div class="card"><div class="card-title">Payment & financing</div><div id="rv2"></div></div>
+    <div class="card"><div class="card-title">Sales rep</div><div id="rv3"></div></div>
+    <div class="card"><div class="card-title">Roofing specs</div><div id="rv4"></div></div>
+    <button class="btn2" onclick="goBack()">&larr; Edit details</button>
+    <button class="btn" id="sendbtn" onclick="sendIt()">Confirm &amp; send via SignWell</button>
+    <div class="alert" id="err2"></div>
   </div>
 
-  <div id="screen-done" class="screen">
+  <!-- STEP 3: DONE -->
+  <div id="s3" class="screen">
     <div class="steps">
-      <div class="step"><div class="step-dot done">&#10003;</div><span class="step-label">Details</span></div>
-      <div class="step-line"></div>
-      <div class="step"><div class="step-dot done">&#10003;</div><span class="step-label">Review</span></div>
-      <div class="step-line"></div>
-      <div class="step"><div class="step-dot done">&#10003;</div><span class="step-label active">Sent</span></div>
+      <div class="step"><div class="sdot dn">&#10003;</div><span class="slabel">Details</span></div>
+      <div class="sline"></div>
+      <div class="step"><div class="sdot dn">&#10003;</div><span class="slabel">Review</span></div>
+      <div class="sline"></div>
+      <div class="step"><div class="sdot dn">&#10003;</div><span class="slabel on">Sent</span></div>
     </div>
     <div class="card" style="text-align:center;padding:2.5rem 1.25rem">
-      <div class="success-icon">&#10003;</div>
+      <div class="ok-icon">&#10003;</div>
       <p style="font-size:18px;font-weight:600;margin-bottom:6px">Contract sent!</p>
-      <p style="font-size:13px;color:#666;margin-bottom:4px" id="done-name"></p>
+      <p style="font-size:13px;color:#666;margin-bottom:4px" id="done-msg"></p>
       <p style="font-size:12px;color:#999" id="done-id"></p>
     </div>
-    <button class="btn-secondary" onclick="startNew()">+ Start a new contract</button>
+    <button class="btn2" onclick="reset()">+ Start a new contract</button>
   </div>
 </div>
 
 <script>
-function v(id){var el=document.getElementById(id);return el&&el.value?el.value.trim():'';}//}
-function fmt$(val){const n=parseFloat(val);return isNaN(n)||!val?'':'$'+n.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});}
-function calcFinal(){const p=parseFloat(document.getElementById('f-price').value)||0;const d=parseFloat(document.getElementById('f-down').value)||0;const el=document.getElementById('f-final');if(el)el.value=(p>0||d>0)?'$'+Math.max(0,p-d).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2}):'';}
-function toggleFinancing(){document.getElementById('fin-block').style.display=v('f-fin')==='Financed'?'block':'none';calcFinal();}
-function toggleCosigner(){const c=document.getElementById('f-cosigner-toggle').checked;document.getElementById('cosigner-block').className='cosigner-block'+(c?' visible':'');}
-function rvRow(l,val){const e=!val;return '<div class="review-row"><span class="review-label">'+l+'</span><span class="review-value'+(e?' empty':'')+'>'+(e?'&mdash;':val)+'</span></div>';}
-function showErr(id,msg){const el=document.getElementById(id);el.className='alert error';el.textContent=msg;}
+// Store all form data here
+var D = {};
 
-function goToReview(){
-  if(!v('f-name')||!v('f-email')){showErr('form-error','Customer name and email are required.');return;}
-  if(!v('f-rep')||!v('f-rep-email')){showErr('form-error','Rep name and email are required.');return;}
-  document.getElementById('form-error').className='alert';
-  const hc=document.getElementById('f-cosigner-toggle').checked;
-  const fin=v('f-fin')==='Financed';
-  const fv=document.getElementById('f-final')?.value||'';
-  document.getElementById('rv-customer').innerHTML=rvRow('Name',v('f-name'))+rvRow('Email',v('f-email'))+rvRow('Phone',v('f-phone'))+rvRow('Address',[v('f-address'),v('f-city'),v('f-state'),v('f-zip')].filter(Boolean).join(', '))+rvRow('Price',fmt$(v('f-price')))+rvRow('Co-signer',hc?'Yes':'No')+(hc?rvRow('Cosigner name',v('f-co-name'))+rvRow('Cosigner phone',v('f-co-phone'))+rvRow('Cosigner email',v('f-co-email')):'');
-  document.getElementById('rv-payment').innerHTML=rvRow('Type',v('f-fin'))+rvRow('Down payment',fmt$(v('f-down')))+rvRow('Final payment',fv)+(fin?rvRow('Bank',v('f-bank'))+rvRow('Monthly payment',fmt$(v('f-monthly')))+rvRow('Term',v('f-term'))+rvRow('APR',v('f-apr')?v('f-apr')+'%':''):'');
-  document.getElementById('rv-rep').innerHTML=rvRow('Rep',v('f-rep'))+rvRow('Rep email',v('f-rep-email'));
-  document.getElementById('rv-roofing').innerHTML=rvRow('Brand',v('f-brand'))+rvRow('Color',v('f-color'))+rvRow('SQ',v('f-sq'))+rvRow('OSB',v('f-osb'))+rvRow('Fascia linear ft',v('f-fascia'))+rvRow('Soffit linear ft',v('f-soffit'))+rvRow('Siding linear ft',v('f-siding'));
-  document.getElementById('screen-form').className='screen';
-  document.getElementById('screen-review').className='screen active';
-  window.scrollTo(0,0);
+function g(id) {
+  var el = document.getElementById(id);
+  if (!el) return '';
+  var val = el.value;
+  if (typeof val === 'string') return val.trim();
+  return '';
 }
 
-function goBack(){document.getElementById('screen-review').className='screen';document.getElementById('screen-form').className='screen active';document.getElementById('send-status').className='alert';}
-
-async function sendContract(){
-  const btn=document.getElementById('confirm-btn');
-  btn.disabled=true;
-  const st=document.getElementById('send-status');
-  st.className='alert loading';st.textContent='Sending contract via SignWell...';
-  const hc=document.getElementById('f-cosigner-toggle').checked;
-  const fv=document.getElementById('f-final')?.value||'';
-  const payload={customerName:v('f-name'),customerEmail:v('f-email'),customerPhone:v('f-phone'),customerAddress:v('f-address'),customerCity:v('f-city'),customerState:v('f-state'),customerZip:v('f-zip'),price:fmt$(v('f-price')),coSigner:hc?'Yes':'No',cosignerName:v('f-co-name'),cosignerPhone:v('f-co-phone'),cosignerEmail:v('f-co-email'),financedOrCash:v('f-fin'),downPayment:fmt$(v('f-down')),finalPayment:fv,bank:v('f-bank'),monthlyPayment:fmt$(v('f-monthly')),term:v('f-term'),apr:v('f-apr')?v('f-apr')+'%':'',rep:v('f-rep'),repEmail:v('f-rep-email'),roofingBrand:v('f-brand'),roofingColor:v('f-color'),roofingSQ:v('f-sq'),roofingOSB:v('f-osb'),fasciaLinearFt:v('f-fascia'),soffitLinearFt:v('f-soffit'),sidingLinearFt:v('f-siding')};
-  try{
-    const res=await fetch('/send-contract',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
-    const data=await res.json();
-    if(res.ok&&data.success){document.getElementById('done-name').textContent='Contract sent to '+v('f-name')+' ('+v('f-email')+')';document.getElementById('done-id').textContent='SignWell ID: '+(data.documentId||'n/a');document.getElementById('screen-review').className='screen';document.getElementById('screen-done').className='screen active';window.scrollTo(0,0);}
-    else{st.className='alert error';st.textContent='Error: '+(data.error?.message||JSON.stringify(data.error)||'Something went wrong.');}
-  }catch(e){st.className='alert error';st.textContent='Error: '+e.message;}
-  btn.disabled=false;
+function money(id) {
+  var n = parseFloat(document.getElementById(id).value);
+  if (isNaN(n) || n === 0) return '';
+  return '$' + n.toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2});
 }
 
-function startNew(){document.querySelectorAll('input[type=text],input[type=email],input[type=tel],input[type=number]').forEach(el=>el.value='');document.querySelectorAll('select').forEach(el=>el.selectedIndex=0);const fi=document.getElementById('f-final');if(fi)fi.value='';document.getElementById('f-cosigner-toggle').checked=false;document.getElementById('cosigner-block').className='cosigner-block';document.getElementById('fin-block').style.display='none';document.getElementById('send-status').className='alert';document.getElementById('screen-done').className='screen';document.getElementById('screen-form').className='screen active';window.scrollTo(0,0);}
+function row(label, val) {
+  var empty = !val;
+  return '<div class="rrow"><span class="rlabel">' + label + '</span><span class="rval' + (empty ? ' empty' : '') + '">' + (empty ? '&mdash;' : val) + '</span></div>';
+}
+
+// Auto-calculate final payment
+document.getElementById('i-price').addEventListener('input', calcFinal);
+document.getElementById('i-down').addEventListener('input', calcFinal);
+function calcFinal() {
+  var p = parseFloat(document.getElementById('i-price').value) || 0;
+  var d = parseFloat(document.getElementById('i-down').value) || 0;
+  var el = document.getElementById('i-final');
+  if (p > 0 || d > 0) {
+    el.value = '$' + Math.max(0, p - d).toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2});
+  } else {
+    el.value = '';
+  }
+}
+
+document.getElementById('i-fin').addEventListener('change', function() {
+  document.getElementById('fin-block').style.display = this.value === 'Financed' ? 'block' : 'none';
+  calcFinal();
+});
+
+document.getElementById('i-co-toggle').addEventListener('change', function() {
+  document.getElementById('co-block').className = 'co-block' + (this.checked ? ' show' : '');
+});
+
+function goReview() {
+  var name = g('i-name'), email = g('i-email'), rep = g('i-rep'), repEmail = g('i-rep-email');
+  var errEl = document.getElementById('err1');
+  if (!name || !email) { errEl.className='alert err'; errEl.textContent='Customer name and email are required.'; return; }
+  if (!rep || !repEmail) { errEl.className='alert err'; errEl.textContent='Rep name and email are required.'; return; }
+  errEl.className='alert';
+
+  // Save all data
+  D.name = name;
+  D.email = email;
+  D.phone = g('i-phone');
+  D.addr = g('i-addr');
+  D.city = g('i-city');
+  D.state = g('i-state');
+  D.zip = g('i-zip');
+  D.price = money('i-price');
+  D.hasCo = document.getElementById('i-co-toggle').checked;
+  D.coName = g('i-co-name');
+  D.coPhone = g('i-co-phone');
+  D.coEmail = g('i-co-email');
+  D.fin = g('i-fin');
+  D.down = money('i-down');
+  D.final = g('i-final');
+  D.bank = g('i-bank');
+  D.monthly = money('i-monthly');
+  D.term = g('i-term');
+  D.apr = g('i-apr') ? g('i-apr') + '%' : '';
+  D.rep = rep;
+  D.repEmail = repEmail;
+  D.brand = g('i-brand');
+  D.color = g('i-color');
+  D.sq = g('i-sq');
+  D.osb = g('i-osb');
+  D.fascia = g('i-fascia');
+  D.soffit = g('i-soffit');
+  D.siding = g('i-siding');
+
+  var addr = [D.addr, D.city, D.state, D.zip].filter(Boolean).join(', ');
+
+  document.getElementById('rv1').innerHTML =
+    row('Name', D.name) + row('Email', D.email) + row('Phone', D.phone) +
+    row('Address', addr) + row('Price', D.price) + row('Co-signer', D.hasCo ? 'Yes' : 'No') +
+    (D.hasCo ? row('Cosigner name', D.coName) + row('Cosigner phone', D.coPhone) + row('Cosigner email', D.coEmail) : '');
+
+  document.getElementById('rv2').innerHTML =
+    row('Type', D.fin) + row('Down payment', D.down) + row('Final payment', D.final) +
+    (D.fin === 'Financed' ? row('Bank', D.bank) + row('Monthly payment', D.monthly) + row('Term', D.term) + row('APR', D.apr) : '');
+
+  document.getElementById('rv3').innerHTML = row('Rep', D.rep) + row('Rep email', D.repEmail);
+
+  document.getElementById('rv4').innerHTML =
+    row('Brand', D.brand) + row('Color', D.color) + row('SQ', D.sq) + row('OSB', D.osb) +
+    row('Fascia linear ft', D.fascia) + row('Soffit linear ft', D.soffit) + row('Siding linear ft', D.siding);
+
+  document.getElementById('s1').className = 'screen';
+  document.getElementById('s2').className = 'screen active';
+  window.scrollTo(0, 0);
+}
+
+function goBack() {
+  document.getElementById('s2').className = 'screen';
+  document.getElementById('s1').className = 'screen active';
+  document.getElementById('err2').className = 'alert';
+}
+
+async function sendIt() {
+  var btn = document.getElementById('sendbtn');
+  var st = document.getElementById('err2');
+  btn.disabled = true;
+  st.className = 'alert load';
+  st.textContent = 'Sending contract via SignWell...';
+
+  var payload = {
+    customerName: D.name, customerEmail: D.email, customerPhone: D.phone,
+    customerAddress: D.addr, customerCity: D.city, customerState: D.state, customerZip: D.zip,
+    price: D.price, coSigner: D.hasCo ? 'Yes' : 'No',
+    cosignerName: D.coName, cosignerPhone: D.coPhone, cosignerEmail: D.coEmail,
+    financedOrCash: D.fin, downPayment: D.down, finalPayment: D.final,
+    bank: D.bank, monthlyPayment: D.monthly, term: D.term, apr: D.apr,
+    rep: D.rep, repEmail: D.repEmail,
+    roofingBrand: D.brand, roofingColor: D.color,
+    roofingSQ: D.sq, roofingOSB: D.osb,
+    fasciaLinearFt: D.fascia, soffitLinearFt: D.soffit, sidingLinearFt: D.siding
+  };
+
+  try {
+    var res = await fetch('/send-contract', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(payload)
+    });
+    var data = await res.json();
+    if (res.ok && data.success) {
+      document.getElementById('done-msg').textContent = 'Contract sent to ' + D.name + ' (' + D.email + ')';
+      document.getElementById('done-id').textContent = 'SignWell ID: ' + (data.documentId || 'n/a');
+      document.getElementById('s2').className = 'screen';
+      document.getElementById('s3').className = 'screen active';
+      window.scrollTo(0, 0);
+    } else {
+      st.className = 'alert err';
+      st.textContent = 'Error: ' + (data.error && data.error.message ? data.error.message : JSON.stringify(data.error));
+    }
+  } catch(e) {
+    st.className = 'alert err';
+    st.textContent = 'Error: ' + e.message;
+  }
+  btn.disabled = false;
+}
+
+function reset() {
+  D = {};
+  document.querySelectorAll('input').forEach(function(el) { el.value = ''; if (el.type==='checkbox') el.checked = false; });
+  document.querySelectorAll('select').forEach(function(el) { el.selectedIndex = 0; });
+  document.getElementById('co-block').className = 'co-block';
+  document.getElementById('fin-block').style.display = 'none';
+  document.getElementById('err2').className = 'alert';
+  document.getElementById('s3').className = 'screen';
+  document.getElementById('s1').className = 'screen active';
+  window.scrollTo(0, 0);
+}
 </script>
 </body>
 </html>

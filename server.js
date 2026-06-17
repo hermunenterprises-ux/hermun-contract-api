@@ -33,7 +33,7 @@ app.post('/send-contract', async (req, res) => {
 
     const recipients = [
       { id: '1', name: customerName, email: customerEmail, placeholder_name: 'Customer' },
-      { id: '2', name: rep, email: repEmail, placeholder_name: 'SalesRep' }
+      { id: '2', name: rep, email: repEmail, placeholder_name: 'Salesrep' }
     ];
 
     if (coSigner === 'Yes' && cosignerEmail) {
@@ -41,7 +41,16 @@ app.post('/send-contract', async (req, res) => {
     }
 
     const fieldValues = [
+      // Customer name — all occurrences
       { api_id: 'CustomerName', value: customerName || '' },
+      { api_id: 'CustomerNameSig2', value: customerName || '' },
+      { api_id: 'CustomerNameSig3', value: customerName || '' },
+      // Rep name — all occurrences
+      { api_id: 'RepName', value: rep || '' },
+      { api_id: 'RepNameSig', value: rep || '' },
+      { api_id: 'RepNameSig2', value: rep || '' },
+      { api_id: 'RepNameSig3', value: rep || '' },
+      // Customer info
       { api_id: 'CustomerEmail', value: customerEmail || '' },
       { api_id: 'CustomerPhone', value: customerPhone || '' },
       { api_id: 'CustomerAddress', value: customerAddress || '' },
@@ -49,10 +58,12 @@ app.post('/send-contract', async (req, res) => {
       { api_id: 'CustomerState', value: customerState || '' },
       { api_id: 'CustomerZip', value: customerZip || '' },
       { api_id: 'Price', value: price || '' },
+      // Co-signer
       { api_id: 'CoSigner', value: coSigner || 'No' },
       { api_id: 'CosignerName', value: cosignerName || '' },
       { api_id: 'CosignerPhone', value: cosignerPhone || '' },
       { api_id: 'CosignerEmail', value: cosignerEmail || '' },
+      // Payment
       { api_id: 'FinancedOrCash', value: financedOrCash || '' },
       { api_id: 'DownPayment', value: downPayment || '' },
       { api_id: 'FinalPayment', value: finalPayment || '' },
@@ -60,9 +71,10 @@ app.post('/send-contract', async (req, res) => {
       { api_id: 'MonthlyPayment', value: monthlyPayment || '' },
       { api_id: 'Term', value: term || '' },
       { api_id: 'APR', value: apr || '' },
+      // Rep
       { api_id: 'Rep', value: rep || '' },
-      { api_id: 'RepName', value: rep || '' },
       { api_id: 'RepEmail', value: repEmail || '' },
+      // Roofing
       { api_id: 'RoofingBrand', value: roofingBrand || '' },
       { api_id: 'RoofingColor', value: roofingColor || '' },
       { api_id: 'RoofingSQ', value: roofingSQ || '' },

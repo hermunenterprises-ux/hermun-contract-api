@@ -190,7 +190,7 @@ p.sub { font-size: 13px; color: #666; margin-bottom: 1.25rem; }
 </div>
 
 <script>
-function v(id){return(document.getElementById(id)||{}).value?.trim()||'';}
+function v(id){var el=document.getElementById(id);return el&&el.value?el.value.trim():'';}//}
 function fmt$(val){const n=parseFloat(val);return isNaN(n)||!val?'':'$'+n.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});}
 function calcFinal(){const p=parseFloat(document.getElementById('f-price').value)||0;const d=parseFloat(document.getElementById('f-down').value)||0;const el=document.getElementById('f-final');if(el)el.value=(p>0||d>0)?'$'+Math.max(0,p-d).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2}):'';}
 function toggleFinancing(){document.getElementById('fin-block').style.display=v('f-fin')==='Financed'?'block':'none';calcFinal();}

@@ -5,13 +5,14 @@ require('dotenv').config();
 
 const app = express();
 
-// Explicit CORS — allow all origins so the Claude form can reach Railway
-app.use(cors({
-  origin: '*',
-  methods: ['GET', 'POST', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-}));
-app.options('*', cors());
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type');
+  if (req.method === 'OPTIONS') return res.sendStatus(200);
+  next();
+});
+
 app.use(express.json());
 
 const SIGNWELL_API_KEY = process.env.SIGNWELL_API_KEY;
@@ -36,12 +37,7 @@ app.post('/send-contract', async (req, res) => {
     ];
 
     if (coSigner === 'Yes' && cosignerEmail) {
-      recipients.push({
-        id: '3',
-        name: cosignerName || 'Co-Signer',
-        email: cosignerEmail,
-        placeholder_name: 'CoSigner',
-      });
+      recipients.push({ id: '3', name: cosignerName || 'Co-Signer', email: cosignerEmail, placeholder_name: 'CoSigner' });
     }
 
     const fieldValues = [
@@ -89,20 +85,14 @@ app.post('/send-contract', async (req, res) => {
 
     const response = await fetch('https://www.signwell.com/api/v1/document_templates/documents/', {
       method: 'POST',
-      headers: {
-        'X-Api-Key': SIGNWELL_API_KEY,
-        'Content-Type': 'application/json',
-      },
+      headers: { 'X-Api-Key': SIGNWELL_API_KEY, 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
     });
 
     const data = await response.json();
     console.log('SignWell response:', JSON.stringify(data, null, 2));
 
-    if (!response.ok) {
-      return res.status(response.status).json({ error: data });
-    }
-
+    if (!response.ok) return res.status(response.status).json({ error: data });
     return res.json({ success: true, documentId: data.id, status: data.status });
 
   } catch (err) {
@@ -113,5 +103,5 @@ app.post('/send-contract', async (req, res) => {
 
 app.get('/', (req, res) => res.json({ status: 'Hermun Enterprises Contract API running ✅' }));
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+const PORT = process.env.PORT || 8080;
+app.listen(PORT, '0.0.0.0', () => console.log(`Server running on port ${PORT}`));
